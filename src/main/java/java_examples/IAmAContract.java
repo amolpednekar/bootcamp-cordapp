@@ -16,22 +16,22 @@ public class IAmAContract implements Contract {
 
     public interface Commands extends CommandData {
         // A command that is only used to parametrise contract verification.
-        class TypeOnlyCommand extends TypeOnlyCommandData implements Commands {
+    class TypeOnlyCommand extends TypeOnlyCommandData implements Commands {
+    }
+
+    // A command that also contains data to be used during contract verification.
+    class CommandWithData implements Commands {
+        private final String contents;
+
+        public CommandWithData(String contents) {
+            this.contents = contents;
         }
 
-        // A command that also contains data to be used during contract verification.
-        class CommandWithData implements Commands {
-            private final String contents;
-
-            public CommandWithData(String contents) {
-                this.contents = contents;
-            }
-
-            public String getContents() {
-                return contents;
-            }
+        public String getContents() {
+            return contents;
         }
     }
+}
 
     @Override
     public void verify(LedgerTransaction tx) throws IllegalArgumentException {

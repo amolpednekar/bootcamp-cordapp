@@ -1,6 +1,7 @@
 package java_bootcamp;
 
 import co.paralleluniverse.fibers.Suspendable;
+import net.corda.core.contracts.ContractState;
 import net.corda.core.flows.*;
 import net.corda.core.identity.Party;
 import net.corda.core.transactions.SignedTransaction;
@@ -33,7 +34,11 @@ public class TokenFlow extends FlowLogic<SignedTransaction> {
         Party notary = getServiceHub().getNetworkMapCache().getNotaryIdentities().get(0);
 
         // We build our transaction.
-        TransactionBuilder transactionBuilder = null; // TODO: Build a valid transaction.
+        //TransactionBuilder transactionBuilder = null; // TODO: Build a valid transaction.
+
+        TransactionBuilder transactionBuilder = new TransactionBuilder(notary);
+        transactionBuilder.addOutputState(new TokenState(getOurIdentity(), recipient, amount),  TokenContract.ID);
+        transactionBuilder.addCommand(new TokenContract.Issue(), getOurIdentity().getOwningKey());
 
         // We check our transaction is valid based on its contracts.
         transactionBuilder.verify(getServiceHub());

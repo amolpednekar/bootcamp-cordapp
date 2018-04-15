@@ -38,7 +38,7 @@ public class TokenState implements ContractState {  // implement ContractState t
     @NotNull
     @Override
     public List<AbstractParty> getParticipants() {
-        return ImmutableList.of(issuer, recipient);
+        return ImmutableList.of(issuer, recipient); // people who are notified about updates to this state
     }
 
 }
